@@ -1,0 +1,50 @@
+@import '../../Styles/variables.scss';
+
+.idea-input {
+	display: grid;
+	grid-template-columns: 40rem;
+	grid-template-rows: auto auto auto;
+	grid-gap: 1rem;
+	padding: 2rem;
+	padding-bottom: 1rem;
+	background: $blue;
+	width: 40rem;
+	margin: 0rem auto;
+	border-radius: 0.2rem;
+
+	&__title {
+		height: 1.5rem;
+		border: $standard-border;
+		padding: 0.5rem;
+		font-size: $font-size;
+		border-radius: 0.2rem;
+		background: $white;
+
+		&::placeholder{
+			font-family: $font;
+			color: $font-color;
+		}
+	}
+
+	&__body {
+		height: 5rem;
+		border: $standard-border;
+		padding: 0.5rem;
+		font-size: $font-size;
+		border-radius: 0.2rem;
+		background: $white;
+
+
+		&::placeholder {
+			font-family: $font;
+			color: $font-color;
+		}
+	}
+
+	&__submit-btn {
+		width: 5rem;
+		justify-self: flex-end;
+		@include rounded-button;
+		background: $yellow;
+	}
+}
