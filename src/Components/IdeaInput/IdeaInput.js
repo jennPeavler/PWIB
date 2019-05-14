@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './IdeaInput.scss';
+import { API } from "aws-amplify";
 
 export default class IdeaInput extends Component {
 	constructor(props) {
@@ -26,16 +27,21 @@ export default class IdeaInput extends Component {
 	}
 
 	onTitleChange(e) {
-		this.setState({title: e.target.value});
+		this.setState({ title: e.target.value });
 	}
 
 	onBodyChange(e) {
-		this.setState({body: e.target.value});
+		this.setState({ body: e.target.value });
 	}
 
 	onSubmit() {
-		//TODO: Will put data into db here
-		//const title = this.state.title;
-		//const body = this.state.body;
+		return API.post("ideas", "/ideas", {
+			body: {
+				title: this.state.title,
+				body: this.state.body,
+				upvotes: 0,
+				comments: []
+			}
+		});
 	}
 }
