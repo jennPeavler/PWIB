@@ -10,19 +10,23 @@
 	background: $blue;
 	width: 40rem;
 	margin: 0rem auto;
-	border-radius: 0.2rem;
+	border-radius: $border-radius;
 
 	&__title {
 		height: 1.5rem;
 		border: $standard-border;
 		padding: 0.5rem;
 		font-size: $font-size;
-		border-radius: 0.2rem;
+		border-radius: $border-radius;
 		background: $white;
 
-		&::placeholder{
+		&::placeholder {
 			font-family: $font;
 			color: $font-color;
+		}
+
+		&:focus {
+			outline-color: $outline-color;
 		}
 	}
 
@@ -39,6 +43,10 @@
 			font-family: $font;
 			color: $font-color;
 		}
+
+		&:focus {
+			outline-color: $outline-color;
+		}
 	}
 
 	&__submit-btn {
@@ -46,5 +54,10 @@
 		justify-self: flex-end;
 		@include rounded-button;
 		background: $yellow;
+
+		&:disabled {
+			background: $white;
+			cursor: default;
+		}
 	}
 }
