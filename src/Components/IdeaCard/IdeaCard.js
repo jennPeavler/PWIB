@@ -8,8 +8,10 @@ import CommentIcon from '../../Icons/CommentIcon';
 
 
 const IdeaCard = ({idea}) => {
+	const pathname = `/ideas/${idea.id}`;
+
 	return (
-		<NavLink className='idea-card' to={`ideas/${idea.id}`}>
+		<NavLink className='idea-card' to={{pathname, selectedIdea: idea}}>
 			<div className='idea-card__title'>{idea.title}</div>
 			<div className='idea-card__body'>{idea.body}</div>
 			<div className='idea-card__stats'>
