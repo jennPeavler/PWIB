@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import './IdeaCard.scss';
 
 import UpvoteIcon from '../../Icons/UpvoteIcon';
@@ -8,7 +9,7 @@ import CommentIcon from '../../Icons/CommentIcon';
 
 const IdeaCard = ({idea}) => {
 	return (
-		<div className='idea-card'>
+		<NavLink className='idea-card' to={`ideas/${idea.id}`}>
 			<div className='idea-card__title'>{idea.title}</div>
 			<div className='idea-card__body'>{idea.body}</div>
 			<div className='idea-card__stats'>
@@ -21,7 +22,7 @@ const IdeaCard = ({idea}) => {
 					<div className='idea-card__comment-count'>{idea.comments.length}</div>
 				</div>
 			</div>
-		</div>
+		</NavLink>
 	);
 }
 

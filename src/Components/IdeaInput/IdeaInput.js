@@ -19,8 +19,8 @@ export default class IdeaInput extends Component {
 	render() {
 		return (
 			<div className='idea-input'>
-				<input className='idea-input__title' placeholder='Type idea title here...' onChange={(e) => this.onTitleChange(e)} />
-				<textarea className='idea-input__body' placeholder='Type idea body here...' onChange={(e) => this.onBodyChange(e)} />
+				<input className='idea-input__title' placeholder='Type idea title here...' value={this.state.title} onChange={(e) => this.onTitleChange(e)} />
+				<textarea className='idea-input__body' placeholder='Type idea body here...' value={this.state.body} onChange={(e) => this.onBodyChange(e)} />
 				<button className='idea-input__submit-btn' onClick={this.onSubmit} disabled={!this.state.title || !this.state.body}>Submit</button>
 			</div>
 		);
@@ -34,14 +34,18 @@ export default class IdeaInput extends Component {
 		this.setState({ body: e.target.value });
 	}
 
+	//TODO: Can we get the idea of the idea posted here and send it in the idea object argument for this.props.onSubmit(idea)
 	onSubmit() {
-		return API.post("ideas", "/ideas", {
-			body: {
+		this.setState({title: '', body: ''});
+		const idea = {
 				title: this.state.title,
 				body: this.state.body,
 				upvotes: 0,
 				comments: []
-			}
+		}
+		API.post("ideas", "/ideas", {
+			body: idea
 		});
+		this.props.onSubmit(idea)
 	}
 }

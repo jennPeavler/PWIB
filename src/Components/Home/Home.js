@@ -14,6 +14,8 @@ export default class Home extends Component {
     this.state = {
       ideas: []
     };
+
+    this.onSubmitIdea = this.onSubmitIdea.bind(this);
   }
 
   async componentWillMount() {
@@ -26,13 +28,18 @@ export default class Home extends Component {
   }
 
   ideas() {
-    return API.get("ideas", "/ideas");
+   return API.get("ideas", "/ideas");
+  }
+
+  onSubmitIdea(idea) {
+    const newIdeas = this.state.ideas.concat(idea);
+    this.setState({ideas: newIdeas})
   }
 
   render() {
     return (
       <div className="Home">
-        <IdeaInput />
+        <IdeaInput onSubmit={this.onSubmitIdea} />
         <Search />
         <IdeaList ideas={this.state.ideas} />
       </div>
