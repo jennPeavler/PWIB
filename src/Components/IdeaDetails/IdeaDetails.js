@@ -9,7 +9,6 @@ export default class IdeaDetails extends Component {
 
 		this.state = {
 			idea: null,
-			upvotes: 0,
 			comment: ''
 		};
 
@@ -36,7 +35,7 @@ export default class IdeaDetails extends Component {
 		const idea = this.state.idea;
 		const title = idea ? idea.title : '';
 		const body = idea ? idea.body : '';
-		const upvotes = this.state.upvotes;
+		const upvotes = idea ? idea.upvotes : 0;
 
 		let commentList = null
 		if (idea && idea.comments && idea.comments.length) {
@@ -54,12 +53,14 @@ export default class IdeaDetails extends Component {
 						<div className='idea-details__upvote-count'>{upvotes}</div>
 					</div>
 				</div>
+				<div className='idea-details__comment-input'>
+					<textarea className='idea-details__comment-textarea' placeholder='Type comment here...' value={this.state.comment} onChange={(e) => this.onCommentChange(e)} />
+					<button className='idea-details__comment-submit' onClick={this.onSubmit} disabled={!this.state.comment}>Save Comment</button>
+				</div>
 				<div className='idea-details__comments'>
 					<div className='idea-details__comment-label'>{commentLabel}</div>
 					{commentList}
 				</div>
-				<input className='idea-input__title' placeholder='Type comment here...' value={this.state.comment} onChange={(e) => this.onCommentChange(e)} />
-				<button className='idea-input__submit-btn' onClick={this.onSubmit} disabled={!this.state.comment}>Save Comment</button>
 			</div>
 		);
 	}
