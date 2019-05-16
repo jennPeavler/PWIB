@@ -32,8 +32,12 @@ export default class Home extends Component {
   }
 
   onSubmitIdea(idea) {
-    const newIdeas = this.state.ideas.concat(idea);
-    this.setState({ideas: newIdeas})
+    API.post("ideas", "/ideas", {
+			body: idea
+		}).then(res => {
+      const newIdeas = this.state.ideas.concat(res);
+      this.setState({ideas: newIdeas})
+    })
   }
 
   onUpvote(e, idea) {

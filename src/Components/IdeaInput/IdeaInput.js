@@ -43,9 +43,7 @@ export default class IdeaInput extends Component {
 				upvotes: 0,
 				comments: []
 		}
-		API.post("ideas", "/ideas", {
-			body: idea
-		});
+		
 		this.props.onSubmit(idea)
 	}
 }
