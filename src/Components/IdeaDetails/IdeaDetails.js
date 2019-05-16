@@ -4,7 +4,8 @@ import './IdeaDetails.scss';
 import UpvoteIcon from  '../../Icons/UpvoteIcon';
 
 const IdeaDetails = (props) => {
-	const idea = props.location.selectedIdea;
+	
+	const	idea = props.location.selectedIdea;
 	
 	let commentList = null;
 	let commentLabel = 'There are no comments on this idea';

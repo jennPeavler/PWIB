@@ -6,7 +6,6 @@ import Search from '../Search/Search';
 import IdeaList from '../IdeaList/IdeaList';
 import { API } from "aws-amplify";
 
-// import ideas from '../../Data/ideas';
 export default class Home extends Component {
   constructor(props) {
     super(props);
