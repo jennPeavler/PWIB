@@ -5,6 +5,6 @@ export default {
     },
     apiGateway: {
         REGION: "us-east-1",
-        URL: "https://pbmk860f58.execute-api.us-east-1.amazonaws.com/dev"
+        URL: "https://e88ln312h2.execute-api.us-east-1.amazonaws.com/dev"
     }
 };
