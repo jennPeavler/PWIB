@@ -41,20 +41,18 @@ export default class Home extends Component {
   }
 
   onUpvote(e, idea) {
-    console.log("in upvote: ", idea)
-    //update idea in api
-    //update idea in state
+    
     e.preventDefault();
-    API.patch("ideas", "/ideas", {
+    API.patch("ideas", `/ideas/${idea.id}`, {
 			body: idea
 		}).then(res => {
-      console.log({res});
       const newIdeas = this.state.ideas.map(newIdea => {
         if(newIdea.id === res.id) {
           newIdea.upvotes = newIdea.upvotes + 1;
         }
         return newIdea
       });
+      
       this.setState({ideas: newIdeas});
     });
     
