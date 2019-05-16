@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './IdeaInput.scss';
-import { API } from "aws-amplify";
+
 
 export default class IdeaInput extends Component {
 	constructor(props) {

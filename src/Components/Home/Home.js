@@ -37,21 +37,26 @@ export default class Home extends Component {
 		}).then(res => {
       const newIdeas = this.state.ideas.concat(res);
       this.setState({ideas: newIdeas})
-    })
+    });
   }
 
   onUpvote(e, idea) {
+    console.log("in upvote: ", idea)
     //update idea in api
     //update idea in state
     e.preventDefault();
-    const newIdeas = this.state.ideas.map(newIdea => {
-      if(newIdea.id === idea.id) {
-        newIdea.upvotes = newIdea.upvotes + 1;
-      }
-      return newIdea
-    })
-
-    this.setState({ideas: newIdeas});
+    API.patch("ideas", "/ideas", {
+			body: idea
+		}).then(res => {
+      console.log({res});
+      const newIdeas = this.state.ideas.map(newIdea => {
+        if(newIdea.id === res.id) {
+          newIdea.upvotes = newIdea.upvotes + 1;
+        }
+        return newIdea
+      });
+      this.setState({ideas: newIdeas});
+    });
     
   }
 
