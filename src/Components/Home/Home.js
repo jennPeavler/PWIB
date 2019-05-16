@@ -15,6 +15,7 @@ export default class Home extends Component {
     };
 
     this.onSubmitIdea = this.onSubmitIdea.bind(this);
+    this.onUpvote = this.onUpvote.bind(this);
   }
 
   async componentWillMount() {
@@ -35,12 +36,27 @@ export default class Home extends Component {
     this.setState({ideas: newIdeas})
   }
 
+  onUpvote(e, idea) {
+    //update idea in api
+    //update idea in state
+    e.preventDefault();
+    const newIdeas = this.state.ideas.map(newIdea => {
+      if(newIdea.id === idea.id) {
+        newIdea.upvotes = newIdea.upvotes + 1;
+      }
+      return newIdea
+    })
+
+    this.setState({ideas: newIdeas});
+    
+  }
+
   render() {
     return (
       <div className="Home">
         <IdeaInput onSubmit={this.onSubmitIdea} />
         <Search />
-        <IdeaList ideas={this.state.ideas} />
+        <IdeaList ideas={this.state.ideas} onUpvote={this.onUpvote} />
       </div>
     );
   }

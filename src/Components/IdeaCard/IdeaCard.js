@@ -7,7 +7,7 @@ import CommentIcon from '../../Icons/CommentIcon';
 
 
 
-const IdeaCard = ({idea}) => {
+const IdeaCard = ({idea, onUpvote}) => {
 	const pathname = `/ideas/${idea.id}`;
 
 	return (
@@ -16,7 +16,9 @@ const IdeaCard = ({idea}) => {
 			<div className='idea-card__body'>{idea.body}</div>
 			<div className='idea-card__stats'>
 				<div className='idea-card__upvotes'>
-					<UpvoteIcon className='idea-card__upvote-icon' />
+					<div className='idea-card__upvote-icon-container' onClick={(e) => onUpvote(e, idea)}>
+						<UpvoteIcon className='idea-card__upvote-icon' />
+					</div>
 					<div className='idea-card__upvote-count'>{idea.upvotes}</div>
 				</div>
 				<div className='idea-card__comments'>
