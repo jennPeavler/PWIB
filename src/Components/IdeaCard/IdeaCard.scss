@@ -47,4 +47,14 @@
 			fill: $black;
 		}
 	}
+
+	&__title-delete {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	&__delete-icon {
+		width: 2rem;
+	}
 }

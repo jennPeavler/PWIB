@@ -16,6 +16,7 @@ export default class Home extends Component {
 
     this.onSubmitIdea = this.onSubmitIdea.bind(this);
     this.onUpvote = this.onUpvote.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   }
 
   async componentWillMount() {
@@ -58,12 +59,22 @@ export default class Home extends Component {
     
   }
 
+  onDelete(e, idea) {
+    e.preventDefault();
+    API.del("ideas", `/ideas/${idea.id}`).then(res => {
+      const remainingIdeas = this.state.ideas.filter(remainingIdea => remainingIdea.id !== idea.id);
+      
+      this.setState({ideas: remainingIdeas});
+    });
+    
+  }
+
   render() {
     return (
       <div className="Home">
         <IdeaInput onSubmit={this.onSubmitIdea} />
         <Search />
-        <IdeaList ideas={this.state.ideas} onUpvote={this.onUpvote} />
+        <IdeaList ideas={this.state.ideas} onUpvote={this.onUpvote} onDelete={this.onDelete} />
       </div>
     );
   }
