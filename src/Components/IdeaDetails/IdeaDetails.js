@@ -1,35 +1,89 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './IdeaDetails.scss';
+import { API } from "aws-amplify";
+import UpvoteIcon from '../../Icons/UpvoteIcon';
 
-import UpvoteIcon from  '../../Icons/UpvoteIcon';
+export default class IdeaDetails extends Component {
+	constructor(props) {
+		super(props);
 
-const IdeaDetails = (props) => {
-	
-	const	idea = props.location.selectedIdea;
-	
-	let commentList = null;
-	let commentLabel = 'There are no comments on this idea';
-	if(idea && idea.comments && idea.comments.length) {
-		commentList = idea.comments.map(comment => <div key={comment} className='idea-details__comment'>{comment}</div>);
-		commentLabel = 'Comments'
+		this.state = {
+			idea: null,
+			upvotes: 0,
+			comment: ''
+		};
+
+		this.onCommentChange = this.onCommentChange.bind(this);
+		this.onUpvoteChange = this.onUpvoteChange.bind(this);
+		this.onSubmit = this.onSubmit.bind(this);
 	}
 
-	return (
-		<div className='idea-details'>
-			<div className='idea-details__idea'>
-				<div className='idea-details__title'>{idea.title}</div>
-				<div className='idea-details__body'>{idea.body}</div>
-				<div className='idea-details__upvotes'>
-					<UpvoteIcon className='idea-details__upvote-icon' />
-					<div className='idea-details__upvote-count'>{idea.upvotes}</div>
-				</div>
-			</div>
-			<div className='idea-details__comments'>
-				<div className='idea-details__comment-label'>{commentLabel}</div>
-				{commentList}
-			</div>
-		</div>
-	);
-}
+	async componentWillMount() {
+		try {
+			const idea = await this.getIdea();
+			this.setState({ idea });
+		} catch (e) {
+			alert(e);
+		}
+	}
 
-export default IdeaDetails;
+	getIdea() {
+		return API.get("ideas", this.props.location.pathname);
+	}
+
+	render() {
+		let commentLabel = 'There are no comments on this idea';
+		const idea = this.state.idea;
+		const title = idea ? idea.title : '';
+		const body = idea ? idea.body : '';
+		const upvotes = this.state.upvotes;
+
+		let commentList = null
+		if (idea && idea.comments && idea.comments.length) {
+			commentList = idea.comments.map(comment => <div key={comment} className='idea-details__comment'>{comment}</div>);
+			commentLabel = 'Comments'
+		}
+
+		return (
+			<div className='idea-details'>
+				<div className='idea-details__idea'>
+					<div className='idea-details__title'>{title}</div>
+					<div className='idea-details__body'>{body}</div>
+					<div className='idea-details__upvotes'>
+						<UpvoteIcon className='idea-details__upvote-icon' />
+						<div className='idea-details__upvote-count'>{upvotes}</div>
+					</div>
+				</div>
+				<div className='idea-details__comments'>
+					<div className='idea-details__comment-label'>{commentLabel}</div>
+					{commentList}
+				</div>
+				<input className='idea-input__title' placeholder='Type comment here...' value={this.state.comment} onChange={(e) => this.onCommentChange(e)} />
+				<button className='idea-input__submit-btn' onClick={this.onSubmit} disabled={!this.state.comment}>Save Comment</button>
+			</div>
+		);
+	}
+
+	onCommentChange(e) {
+		this.setState({ comment: e.target.value });
+	}
+
+	onUpvoteChange(e) {
+		this.setState({ upvotes: this.state.upvotes + 1 });
+		let updated_idea = this.state.idea;
+		updated_idea.upvotes = this.state.upvotes;
+		API.patch("ideas", this.props.location.pathname, {
+			body: updated_idea
+		});
+	}
+
+	onSubmit() {
+		let updated_idea = this.state.idea;
+		updated_idea.comments.push(this.state.comment);
+
+		API.patch("ideas", this.props.location.pathname, {
+			body: updated_idea
+		});
+		this.setState({ idea: updated_idea, comment: '' });
+	}
+}
